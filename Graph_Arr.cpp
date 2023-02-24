@@ -1,14 +1,20 @@
 #include <iostream>
 #include <deque>
 #include <vector>
-#include <map>
-#include <set>
 using namespace std;
 
-class GraphGeneric
+class Graph
 {
 public:
-    map<int, vector<int>> graph;
+    int size;
+    vector<vector<int>> graph;
+
+    Graph(int n)
+    {
+        size = n;
+        for (int i = 0; i < n; i++)
+            graph.push_back(vector<int>());
+    }
 
     void add_edge(int a, int b)
     {
@@ -19,25 +25,25 @@ public:
     vector<int> nodes()
     {
         vector<int> res;
-        map<int, vector<int>>::iterator itr;
-        // auto itr;
-        for (itr = graph.begin(); itr != graph.end(); itr++)
-            res.push_back(itr->first);
-
+        for (int i = 0; i < size; i++)
+            res.push_back(i);
         return res;
     }
 
     vector<int> neighbors(int src)
     {
-        if (graph.find(src) == graph.end())
+        if (src < 0 || src >= size)
             return vector<int>();
-        return graph.at(src);
+        return graph[src];
     }
 
     void DFS(int source)
     {
         deque<int> st;
-        set<int> seen;
+
+        bool visited[size];
+        for (int i = 0; i < size; i++)
+            visited[i] = 0;
 
         st.push_back(source);
         while (!st.empty())
@@ -45,9 +51,9 @@ public:
             int node = st.back();
             st.pop_back();
 
-            if (seen.find(node) != seen.end())
+            if (visited[node])
                 continue;
-            seen.insert(node);
+            visited[node] = 1;
 
             cout << node << " ";
             for (int nei : neighbors(node))
@@ -58,7 +64,9 @@ public:
     void BFS(int source)
     {
         deque<int> q;
-        set<int> seen;
+        bool visited[size];
+        for (int i = 0; i < size; i++)
+            visited[i] = 0;
 
         q.push_back(source);
         while (!q.empty())
@@ -66,9 +74,9 @@ public:
             int node = q.front();
             q.pop_front();
 
-            if (seen.find(node) != seen.end())
+            if (visited[node])
                 continue;
-            seen.insert(node);
+            visited[node] = 1;
 
             cout << node << " ";
             for (int nei : neighbors(node))
@@ -80,29 +88,35 @@ public:
 int main()
 {
     /*
-            10 --- 3
-            |      |
-            38 --- 2
+            0 --- 1
+            |     |
+            3 --- 2
              \   /
               \ /
-               7
+               4
     */
 
-    GraphGeneric graph;
+    int n = 5;
+    Graph graph = Graph(n);
 
     vector<vector<int>> edges;
-    edges.push_back({10, 3});
-    edges.push_back({3, 2});
-    edges.push_back({2, 38});
-    edges.push_back({38, 10});
-    edges.push_back({2, 7});
-    edges.push_back({38, 7});
+    edges.push_back({0, 1});
+    edges.push_back({1, 2});
+    edges.push_back({2, 3});
+    edges.push_back({3, 0});
+    edges.push_back({3, 4});
+    edges.push_back({2, 4});
 
     for (int i = 0; i < edges.size(); i++)
         graph.add_edge(edges[i][0], edges[i][1]);
 
+    // // input number of nodes
+    // cout << "Enter number of nodes: ";
+    // int num_nodes;
+    // cin >> num_nodes;
+
     // // initialization
-    // GraphGeneric graph;
+    // Graph graph(num_nodes);
 
     // // input of edges
     // cout << "Enter number of edges: ";
