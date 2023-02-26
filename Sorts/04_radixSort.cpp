@@ -1,4 +1,4 @@
-#include "./helper/arrHelper.cpp"
+#include "arrHelper.cpp"
 #include <iostream>
 using namespace std;
 
