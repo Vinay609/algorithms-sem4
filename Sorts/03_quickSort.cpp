@@ -44,6 +44,53 @@ int quickSort(int arr[], int n)
     return quickSort(arr, 0, n - 1);
 }
 
+int partitionYT(int arr[], int low, int high)
+{
+    int pivot = low, i = low, j = high;
+    while (i < j)
+    {
+        while (i <= high && arr[i] <= arr[pivot])
+            i++;
+        while (j >= low && arr[j] > arr[pivot])
+            j--;
+
+        if (i < j)
+            swap(arr[i], arr[j]);
+    }
+    swap(arr[j], arr[pivot]);
+    return j;
+}
+
+void quickSortYT(int arr[], int low, int high)
+{
+    if (low >= high)
+        return;
+
+    int pivot = partitionYT(arr, low, high);
+
+    quickSortYT(arr, low, pivot - 1);
+    quickSortYT(arr, pivot + 1, high);
+}
+
+// int main()
+// {
+//     cout << "Enter n: ";
+//     int n;
+//     cin >> n;
+//     int arr[n];
+
+//     input(arr, n);
+
+//     // *******************************
+//     int num_comp = quickSort(arr, n);
+//     // *******************************
+
+//     cout << "\nArray after sorting:\n";
+//     print(arr, n);
+//     cout << "\nNumber of comparisons: " << num_comp;
+//     cout << endl;
+// }
+
 int main()
 {
     cout << "Enter n: ";
@@ -54,11 +101,10 @@ int main()
     input(arr, n);
 
     // *******************************
-    int num_comp = quickSort(arr, n);
+    quickSortYT(arr, 0, n - 1);
     // *******************************
 
     cout << "\nArray after sorting:\n";
     print(arr, n);
-    cout << "\nNumber of comparisons: " << num_comp;
     cout << endl;
 }
