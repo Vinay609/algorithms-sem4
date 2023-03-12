@@ -3,7 +3,8 @@
 using namespace std;
 
 // helper for heapSort
-int heapify(int arr[], int n, int i)
+template <typename T>
+int heapify(T arr[], int n, int i)
 {
     int l = 2 * i + 1;
     int r = l + 1;
@@ -25,7 +26,8 @@ int heapify(int arr[], int n, int i)
 }
 
 // main sorting function
-int heapSort(int arr[], int n)
+template <typename T>
+int heapSort(T arr[], int n)
 {
     // building max-heap
     int cnt = 0;
@@ -47,7 +49,7 @@ int main()
     cout << "Enter n: ";
     int n;
     cin >> n;
-    int arr[n];
+    char arr[n];
 
     input(arr, n);
 

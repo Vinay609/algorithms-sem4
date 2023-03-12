@@ -1,14 +1,16 @@
 #include <iostream>
 using namespace std;
 
-void input(int arr[], int n)
+template <typename T>
+void input(T arr[], int n)
 {   
     cout << "Enter " << n << " numbers: ";
     for (int i = 0; i < n; i++)
         cin >> arr[i];
 }
 
-void print(int arr[], int n)
+template <typename T>
+void print(T arr[], int n)
 {
     for (int i = 0; i < n; i++)
         cout << arr[i] << " ";
